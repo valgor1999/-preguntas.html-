@@ -1,0 +1,85 @@
+<preguntas.html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Preguntas Verbales</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <p id="pregunta"></p>
+    <input type="text" id="respuesta" placeholder="Escribe tu respuesta aquí">
+    <button onclick="verificarRespuesta()">Verificar</button>
+    <p id="resultado"></p>
+    <div id="verbos-posibles"></div>
+</div>
+
+<script>
+    const verbos = ['hablar', 'escribir', 'vivir', 'hacer', 'tener'];
+
+    // Función para obtener una pregunta aleatoria
+    function obtenerPreguntaAleatoria() {
+        const tiempoAleatorio = ['presente del indicativo', 'pretérito perfecto del subjuntivo', 'pretérito imperfecto del indicativo', 'futuro simple del indicativo', 'futuro perfecto del subjuntivo'];
+
+        // Selecciona aleatoriamente un tiempo
+        const tiempo = tiempoAleatorio[Math.floor(Math.random() * tiempoAleatorio.length)];
+
+        return {
+            pregunta: `Conjuga el verbo en primera persona del singular (yo) en ${tiempo}.`,
+            respuesta: obtenerRespuestaCorrecta(tiempo)
+        };
+    }
+
+    // Función para obtener la respuesta correcta basada en el tiempo
+    function obtenerRespuestaCorrecta(tiempo) {
+        // Implementa la lógica para obtener la respuesta correcta según el tiempo y el verbo
+        // Aquí puedes utilizar librerías de conjugación verbal en español para obtener respuestas precisas.
+        // En este ejemplo, se proporcionan respuestas estáticas para simplificar.
+        return 'Respuesta de ejemplo';
+    }
+
+    // Función para verificar la respuesta del usuario
+    function verificarRespuesta() {
+        const preguntaActual = obtenerPreguntaAleatoria();
+        const respuestaUsuario = document.getElementById('respuesta').value.trim().toLowerCase();
+        const resultadoElemento = document.getElementById('resultado');
+
+        if (respuestaUsuario === preguntaActual.respuesta) {
+            resultadoElemento.textContent = "¡Respuesta correcta!";
+        } else {
+            resultadoElemento.textContent = "Respuesta incorrecta. La respuesta correcta es: '" + preguntaActual.respuesta + "'";
+        }
+
+        // Muestra una nueva pregunta después de verificar la respuesta
+        mostrarNuevaPregunta();
+    }
+
+    // Función para mostrar una nueva pregunta
+    function mostrarNuevaPregunta() {
+        const preguntaActual = obtenerPreguntaAleatoria();
+        document.getElementById('pregunta').textContent = preguntaActual.pregunta;
+        document.getElementById('respuesta').value = ''; // Limpiar el campo de respuesta
+        document.getElementById('resultado').textContent = ''; // Limpiar el resultado anterior
+
+        // Muestra todos los verbos posibles centrados en la pantalla
+        const verbosPosiblesElemento = document.getElementById('verbos-posibles');
+        verbosPosiblesElemento.innerHTML = verbos.map(verbo => `<span>${verbo}</span>`).join(' ');
+    }
+
+    // Inicializa mostrando la primera pregunta
+    mostrarNuevaPregunta();
+</script>
+
+</body>
+</html>
